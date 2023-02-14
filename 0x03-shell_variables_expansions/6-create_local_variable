@@ -1,2 +1,2 @@
 #!/bin/bash
-cat BEST="School"
+BEST="School"
