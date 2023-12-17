@@ -1,20 +1,21 @@
-#setup nginx
+# Automating project requirements using Puppet
 
-package {
-    'nginx':
-    ensure => installed,
+package { 'nginx':
+  ensure => installed,
 }
 
-file {'/var/www/html/index.nginx-debian.html':
-    content => 'Hello World!',
+file_line { 'install':
+  ensure => 'present',
+  path   => '/etc/nginx/sites-enabled/default',
+  after  => 'listen 80 default_server;',
+  line   => 'rewrite ^/redirect_me https://www.github.com/vikzenith permanent;',
 }
 
-file_line {'configure redirection':
-    path  =>  '/etc/nginx/sites-available/default',
-    after =>  'server_name _;',
-    line  =>  "\n\tlocation /redirect_me {\n\t\treturn 301 https://youtu.be/dQw4w9WgXcQ;\n\t}\n",
+file { '/var/www/html/index.html':
+  content => 'Hello World!',
 }
 
-service {'nginx':
-    ensure => running,
+service { 'nginx':
+  ensure  => running,
+  require => Package['nginx'],
 }
