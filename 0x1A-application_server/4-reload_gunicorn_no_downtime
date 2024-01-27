@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+<<<<<<< HEAD
 # Gracefully reloads Gunicorn.
 
 ps aux | grep gunicorn | awk '{ print $2 }' | xargs kill -HUP
+=======
+# Kill gunicorn worker processe gracefully, with no downtime
+pkill -HUP gunicorn
+>>>>>>> 6ae8db62c04c5667b0d94dd99b29a5f6ba795f19
